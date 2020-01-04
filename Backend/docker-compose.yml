@@ -38,7 +38,7 @@ services:
     build: .
     command: yarn queue
     volumes:
-    -  /c/User/a4_an/Music/Backend:/usr/app
+    -  ${DOCKER_PATH}:/usr/app
     - /usr/app/node_modules
     links:
       - redisdb
