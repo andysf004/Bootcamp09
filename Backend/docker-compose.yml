@@ -1,0 +1,52 @@
+version: "3.3"
+
+services:
+  app:
+    build: .
+    command: yarn dev
+    ports:
+      - "3333:3333"
+    volumes:
+      - D:/Gympoint/Backend:/usr/app
+      - /usr/app/node_modules
+    depends_on:
+      - postgres
+      - mongodb
+    links:
+      - mongodb
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/Gympoint
+      MONGO_URI: mongodb://root:mongo2019@192.168.99.100:27017/
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: Gympoint
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DOCKER_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DOCKER_PASSWORD}
+
+  jobs:
+    container_name: workers
+    build: .
+    command: yarn queue
+    volumes:
+    -  .:/usr/app
+    - /usr/app/node_modules
+    links:
+      - redisdb
+
+  redisdb:
+    image: redis:latest
+    ports:
+      - 6379:6379
+
+
+
