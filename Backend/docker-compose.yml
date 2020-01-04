@@ -17,7 +17,7 @@ services:
       - postgres
     environment:
       DATABASE_URL: postgres://postgres@postgres/Gympoint
-      MONGO_URI: mongodb://root:mongo2019@192.168.99.100:27017/
+      MONGO_URI: ${MONGO_URL}
   postgres:
     image: postgres:latest
     ports:
