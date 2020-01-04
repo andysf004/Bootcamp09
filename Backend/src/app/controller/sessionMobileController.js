@@ -3,6 +3,7 @@ import authConfig from '../../config/auth';
 import Enrollment from '../model/Enrollment';
 import Checkin from '../model/Checkin';
 
+//Controle para Sign in do aluno no celular
 class SessionMobile {
   async store(req, res) {
     const stud = await Enrollment.findOne({

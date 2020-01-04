@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Form } from '@rocketseat/unform';
+import Dialog from '@material-ui/core/Dialog';
 import { MdAdd, MdSearch } from 'react-icons/md';
 import api from '~/services/api';
 import history from '~/services/history';
@@ -9,12 +10,15 @@ import {
   studentEdition,
 } from '~/store/module/studentList/actions';
 import Header from '~/components/Header';
-import { Container, Title, List, RegisterButton } from './styles';
+import { Container, Title, List, RegisterButton, Modal, Button } from './styles';
 
 export default function Student() {
   const s = useSelector(state => state.studentList.students);
 
   const [students, setStudents] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [stdDelete, setstdDelete] = useState({});
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -41,6 +45,12 @@ export default function Student() {
     setStudents([st]);
   }
 
+  function handleOpen(id){
+    const stud = students.find(std => std.id === id);
+    setstdDelete(stud);
+    setOpen(true);
+    
+  }
   async function handleDelete(id) {
     const student = students.find(std => std.id === id);
 
@@ -54,7 +64,7 @@ export default function Student() {
 
   return (
     <>
-      <Header />
+      <Header /> 
       <Container>
         <Title>
           <p>Gerenciando alunos</p>
@@ -99,7 +109,7 @@ export default function Student() {
                   </button>
                   <button
                     type="submit"
-                    onClick={() => handleDelete(student.id)}
+                    onClick={() => handleOpen(student.id)}
                   >
                     apagar
                   </button>
@@ -108,6 +118,21 @@ export default function Student() {
             ))}
           </tbody>
         </List>
+        <Dialog open={open} onClose="" id="myform" >
+          <Modal>
+            <div>
+              <h4>Tem certeza que gostaria de excluir o aluno ?</h4>
+            </div>
+            <div>
+              <Button onClick={() => setOpen(false)} color="primary">
+                Voltar
+              </Button>
+              <Button onClick={() => handleDelete(stdDelete.id)} color="primary">
+                Excluir aluno
+              </Button>
+            </div>
+          </Modal>
+        </Dialog>
       </Container>
     </>
   );

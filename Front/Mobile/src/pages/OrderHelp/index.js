@@ -1,6 +1,6 @@
 // eslint-disable-next-line react-hooks/rules-of-hooks
 import React, { useState, useEffect } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 import Button from '~/components/Button';
@@ -10,11 +10,12 @@ import Question from '~/components/Question';
 import { Container, List } from './styles';
 
 export default function OrderHelp({ navigation }) {
+  const id = useSelector(state => state.auth.student_id)
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     async function loadOrder() {
-      const response = await api.get('/students/1/help-orders');
+      const response = await api.get(`/students/${id}/help-orders`);
       setOrders(response.data);
     }
 

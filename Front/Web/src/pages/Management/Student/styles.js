@@ -115,3 +115,38 @@ export const List = styled.table`
     text-align: right;
   }
 `;
+
+
+export const Modal = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  width: 450px;
+  padding: 30px;
+
+  h4 {
+    margin-bottom: 8px;
+  }
+
+  p {
+    width: 390px;
+    height: 150px;
+
+    font-size: 16px;
+    line-height: 26px;
+  }
+`;
+
+export const Button = styled.button`
+  background: #de3b3b;
+  width: 390px;
+  height: 45px;
+  border: 0;
+  border-radius: 4px;
+  color: #fff;
+  margin-top: 21px;
+  font-family: Roboto, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+`;
